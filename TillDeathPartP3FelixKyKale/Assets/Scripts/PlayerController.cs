@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 50f;
     private Rigidbody rb;
     private Camera mainCam;
 
     public float horizontal;
     public float vertical;
+
+    Vector3 moveDirection;
+    public Transform orientation;
 
     // Start is called before the first frame update
     void Start()
@@ -21,14 +25,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        rb.drag = 5;
         PlayerMovement();
     }
 
     void PlayerMovement()
     {
-        rb.velocity = (Vector3.left * speed * horizontal);
-        rb.velocity = (Vector3.forward  * speed * vertical);
+        moveDirection = orientation.forward * vertical + orientation.right * horizontal;
+
+        rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
     }
 }
