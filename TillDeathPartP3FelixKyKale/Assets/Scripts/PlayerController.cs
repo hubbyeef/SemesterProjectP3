@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 50f;
+    private float speed = 25f;
     private Rigidbody rb;
     private Camera mainCam;
 
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = orientation.forward * vertical + orientation.right * horizontal;
 
+        transform.rotation = orientation.rotation;
         rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
     }
 }
