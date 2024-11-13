@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float speed = 25f;
-    public Rigidbody rb;
+    public Animator animator;
+    private Rigidbody rb;
     private Camera mainCam;
 
     public float horizontal;
@@ -37,5 +38,7 @@ public class PlayerController : MonoBehaviour
 
         transform.rotation = orientation.rotation;
         rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
+
+        animator.SetFloat("Move X", Mathf.Abs(vertical));
     }
 }

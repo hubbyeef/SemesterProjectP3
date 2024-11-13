@@ -7,6 +7,8 @@ public class WindowOpening : MonoBehaviour
     public bool beingOpened;
     public float stopPoint = -0.3f;
 
+    public Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +21,7 @@ public class WindowOpening : MonoBehaviour
     {
         if (beingOpened)
         {
-            if (transform.position.y < stopPoint)
-            {
-                transform.Translate(Vector3.up * Time.deltaTime);
-            }
+            animator.Play("Openingwindow");
         }
     }
 }

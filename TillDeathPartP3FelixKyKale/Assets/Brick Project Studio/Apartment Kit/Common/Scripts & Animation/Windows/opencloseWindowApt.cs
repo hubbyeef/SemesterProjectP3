@@ -10,6 +10,8 @@ namespace SojaExiles
 
 		public Animator openandclosewindow;
 		public bool open;
+		public bool beingOpened;
+		public bool fullyOpen;
 		public Transform Player;
 
 		void Start()
@@ -25,19 +27,13 @@ namespace SojaExiles
 					float dist = Vector3.Distance(Player.position, transform.position);
 					if (dist < 15)
 					{
-						if (open == false)
+						
 						{
-							if (Input.GetMouseButtonDown(0))
-							{
-								StartCoroutine(opening());
-							}
-						}
-						else
-						{
-							if (open == true)
+							if (open == true || fullyOpen == true)
 							{
 								if (Input.GetMouseButtonDown(0))
 								{
+									StopCoroutine(opening());
 									StartCoroutine(closing());
 								}
 							}
@@ -51,11 +47,21 @@ namespace SojaExiles
 
 		}
 
-		IEnumerator opening()
+        void FixedUpdate()
+        {
+			if (beingOpened)
+			{
+				StartCoroutine(opening());
+			}
+        }
+
+
+    IEnumerator opening()
 		{
 			print("you are opening the Window");
-			openandclosewindow.Play("Openingwindow");
 			open = true;
+			openandclosewindow.Play("Openingwindow");
+			fullyOpen = true;
 			yield return new WaitForSeconds(.5f);
 		}
 
