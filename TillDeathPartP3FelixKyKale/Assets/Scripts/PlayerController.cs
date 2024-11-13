@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float speed = 25f;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Camera mainCam;
 
     public float horizontal;
