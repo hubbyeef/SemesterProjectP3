@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
-    public Skybox nightSkybox;
+    public Material nightSkybox;
+    public Material daySkybox;
+    public Material eveningSkybox;
 
     public List<GameObject> windows;
 
@@ -40,7 +42,12 @@ public class GameManager : MonoBehaviour
     {
         if (night)
         {
+            RenderSettings.skybox = nightSkybox;
             OpenRandomWindow();
+        }
+        if (!night)
+        {
+            RenderSettings.skybox = daySkybox;
         }
     }
 

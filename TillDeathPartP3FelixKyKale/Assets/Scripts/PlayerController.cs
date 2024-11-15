@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -30,6 +31,15 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         rb.drag = 5;
         PlayerMovement();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 32; //sprint
+        }
+        else
+        {
+            speed = 25;
+        }
+        
     }
 
     void PlayerMovement()
