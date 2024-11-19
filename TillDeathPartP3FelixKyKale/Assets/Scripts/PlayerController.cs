@@ -3,10 +3,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 25f;
+    [Header("Movement")]
+    [Range(0, 3000)]
+    public float stamina;
+    public float maxStamina = 2000;
+    private float staminaSpendRate = 120f;
+    private float staminaRechargeRate = 80;
+    public float speed = 25f;
+    public bool running;
+    private Coroutine recharge;
+
+    public Image staminaBar;
+
+
     public Animator animator;
     private Rigidbody rb;
     private Camera mainCam;
@@ -17,11 +30,26 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     public Transform orientation;
 
+    public float staminaPercentUnit;
+    public float percentUnit;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         mainCam = Camera.main;
+
+        stamina = maxStamina;
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private void OnValidate()
+    {
+      
     }
 
     // Update is called once per frame
@@ -31,14 +59,29 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         rb.drag = 5;
         PlayerMovement();
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && stamina > 0)
         {
             speed = 32; //sprint
+            running = true;
+
+            stamina -= staminaSpendRate * Time.deltaTime;
+            if (stamina <0) { stamina = 0; }
+            UpdateStamina();
         }
-        else
+        else if (stamina < maxStamina)
         {
             speed = 25;
+            running = false;
+            StartCoroutine(RechargeStamina());
+            if (stamina >= maxStamina)
+            {
+                stamina = maxStamina;
+                StopCoroutine(RechargeStamina() );
+            }
         }
+
+    
+        
         
     }
 
@@ -50,5 +93,22 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(moveDirection.normalized * speed, ForceMode.Force);
 
         animator.SetFloat("Move X", Mathf.Abs(vertical));
+    }
+
+    void UpdateStamina()
+    {
+        staminaBar.fillAmount = stamina / maxStamina;
+    }
+
+    IEnumerator RechargeStamina()
+    {
+        yield return new WaitForSeconds(1);
+
+        while (stamina < maxStamina)
+        {
+            stamina += staminaRechargeRate;
+            UpdateStamina();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
