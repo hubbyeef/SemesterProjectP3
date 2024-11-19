@@ -73,11 +73,8 @@ public class PlayerController : MonoBehaviour
             speed = 25;
             running = false;
             StartCoroutine(RechargeStamina());
-            if (stamina >= maxStamina)
-            {
-                stamina = maxStamina;
-                StopCoroutine(RechargeStamina() );
-            }
+            if (stamina > maxStamina) 
+            { stamina = maxStamina; StopCoroutine(RechargeStamina()); }
         }
 
     
@@ -106,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
         while (stamina < maxStamina)
         {
-            stamina += staminaRechargeRate;
+            stamina += staminaRechargeRate / 400;
             UpdateStamina();
             yield return new WaitForSeconds(0.1f);
         }

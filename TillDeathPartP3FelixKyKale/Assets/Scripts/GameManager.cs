@@ -22,7 +22,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (night)
+        {
+            RenderSettings.skybox = nightSkybox;
+            StartCoroutine(OpenRandomWindow());
+        }
     }
 
     // Update is called once per frame
@@ -40,15 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (night)
-        {
-            RenderSettings.skybox = nightSkybox;
-            OpenRandomWindow();
-        }
-        if (!night)
-        {
-            RenderSettings.skybox = daySkybox;
-        }
+        
     }
 
     public void StartGame()
@@ -95,6 +91,9 @@ public class GameManager : MonoBehaviour
     {
         yield return null;
 
-        RandomWindow(); yield return new WaitForSeconds(10 - level ^ 2);
+        while (night)
+        {
+            RandomWindow(); yield return new WaitForSeconds(10 - level ^ 2);
+        }
     }
 }
