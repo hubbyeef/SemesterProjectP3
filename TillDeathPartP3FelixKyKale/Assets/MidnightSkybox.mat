@@ -94,7 +94,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HorizonLineContribution: 0.009
+    - _HorizonLineContribution: 0
     - _HorizonLineExponent: 4
     - _ImageType: 0
     - _Layout: 0
@@ -111,8 +111,8 @@ Material:
     - _SrcBlend: 1
     - _SunDiscExponent: 125000
     - _SunDiscMultiplier: 25
-    - _SunHaloContribution: 0.75
-    - _SunHaloExponent: 125
+    - _SunHaloContribution: 1
+    - _SunHaloExponent: 200
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

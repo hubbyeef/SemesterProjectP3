@@ -9,7 +9,7 @@ public class VentOpen : MonoBehaviour
     public GameObject player;
     public bool beingOpened;
     public float openSpeed;
-    public float maxOpenDistance = 2;
+    public float maxOpenDistance = 5;
     public Transform hingePoint;
 
     void Start()
