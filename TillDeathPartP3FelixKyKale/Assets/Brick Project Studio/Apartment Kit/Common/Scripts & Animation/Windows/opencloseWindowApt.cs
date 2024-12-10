@@ -14,11 +14,13 @@ namespace SojaExiles
 		public bool fullyOpen;
 		public Transform Player;
 
-		void Start()
-		{
-			open = false;
-			Player = GameObject.Find("Player").transform;
-		}
+
+        private void Awake()
+        {
+			beingOpened = false;
+            open = false;
+            Player = GameObject.Find("Player").transform;
+        }
 
 		void OnMouseOver()
 		{
@@ -48,21 +50,12 @@ namespace SojaExiles
 
 		}
 
-        void FixedUpdate()
-        {
-			if (beingOpened)
-			{
-				StartCoroutine(opening());
-			}
-        }
 
-
-    IEnumerator opening()
+     public IEnumerator opening()
 		{
 			print("you are opening the Window");
 			open = true;
 			openandclosewindow.Play("Openingwindow");
-			fullyOpen = true;
 			yield return new WaitForSeconds(.5f);
 		}
 

@@ -7,16 +7,25 @@ public class VentOpen : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject player;
-    public bool beingOpened;
-    public float openSpeed;
-    public float maxOpenDistance = 5;
     public Transform hingePoint;
+
+    private Animator animator;
+    private AudioSource audioSource;
+    private GameManager gameManager;
+
+    public AudioClip ventOpening;
+    public AudioClip ventClosing;
+
+    public AnimationClip openVent;
 
     public bool open;
 
     void Start()
     {
         player = GameObject.Find("Player");
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -25,38 +34,16 @@ public class VentOpen : MonoBehaviour
         
     }
 
-    public void OpenVent()
+    public IEnumerator OpenVent()
     {
-        transform.Rotate(new Vector3(90, 0, 0));
+        audioSource.PlayOneShot(ventOpening);
+        yield return new WaitForSeconds(ventOpening.length);
+        animator.Play("VentOpening");
+        open = true;
     }
 
     public void CloseVent()
     {
-        transform.Rotate(new Vector3(-90, 0, 0));
-    }
-
-    void OnMouseOver()
-    {
-        {
-                float dist = Vector3.Distance(player.transform.position, transform.position);
-                if (dist < 5)
-                {
-
-                    {
-                        if (open == true )
-                        {
-                            if (Input.GetMouseButtonDown(0))
-                            {
-                                CloseVent();
-                            }
-                        }
-
-                    }
-
-                }
-            
-
-        }
-
+        animator.Play("VentClosing");
     }
 }

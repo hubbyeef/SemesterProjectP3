@@ -19,7 +19,7 @@ public class LightSwitch : MonoBehaviour
         lightOn = true;
         foreach (var item in lights)
         {
-            item.GetComponent<Light>().intensity = 0.1f;
+            item.GetComponent<Light>().intensity = 1f;
         }
     }
 
@@ -32,7 +32,7 @@ public class LightSwitch : MonoBehaviour
     void OnMouseOver()
     {
         float dist = Vector3.Distance(player.transform.position, transform.position);
-        if (dist < 5)
+        if (dist < 10)
         {
 
             {
@@ -41,6 +41,7 @@ public class LightSwitch : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         lightOn = true;
+                        Debug.Log("LightToggled");
                         foreach (var item in lights)
                         {
                             item.GetComponent<Light>().intensity = 0.1f;
@@ -53,6 +54,7 @@ public class LightSwitch : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         lightOn = false;
+                        Debug.Log("LightToggled");
                         foreach (var item in lights)
                         {
                             item.GetComponent<Light>().intensity = regularIntensity;

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Material daySkybox;
     public Material eveningSkybox;
 
-    public List<GameObject> windows;
+    private GameObject[] windows;
     public GameObject vent;
 
     public bool paused;
@@ -20,9 +20,17 @@ public class GameManager : MonoBehaviour
     public bool night;
     public int level;
 
+
+    private void Awake()
+    {
+        windows = GameObject.FindGameObjectsWithTag("Window");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        
+
         if (night)
         {
             RenderSettings.skybox = nightSkybox;
@@ -82,16 +90,17 @@ public class GameManager : MonoBehaviour
 
     public void RandomWindow()
     {
-        int pickRandom = Random.Range(0, windows.Count);
+        int pickRandom = Random.Range(0, windows.Length);
         if (windows[pickRandom].GetComponent<opencloseWindowApt>().beingOpened == false)
         {
             windows[pickRandom].GetComponent<opencloseWindowApt>().beingOpened = true;
+            StartCoroutine(windows[pickRandom].GetComponent<opencloseWindowApt>().opening());
         }
     }
 
     public IEnumerator OpenRandomWindow()
     {
-        yield return null;
+        yield return new WaitForSeconds(10);
 
         while (night)
         {
@@ -101,11 +110,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator OpenVent()
     {
-        yield return null;
+        yield return new WaitForSeconds(5);
+
         while (night)
         {
-            vent.GetComponent<VentOpen>().OpenVent();
-            yield return new WaitForSeconds(Random.Range(15, 30));
+            StartCoroutine(vent.GetComponent<VentOpen>().OpenVent());
+            yield return new WaitForSeconds(Random.Range(30, 50));
         }
     }
 }
