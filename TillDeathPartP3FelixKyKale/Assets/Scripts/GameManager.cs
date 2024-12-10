@@ -83,6 +83,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("TitleScreen");
     }
 
+    public void GameOver()
+    {
+
+    }
+
     public void LevelFinish()
     {
     
