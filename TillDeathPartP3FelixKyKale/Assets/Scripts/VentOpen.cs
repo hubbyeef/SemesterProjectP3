@@ -19,6 +19,7 @@ public class VentOpen : MonoBehaviour
     public AnimationClip openVent;
 
     public bool open;
+    public float timer;
 
     void Start()
     {
@@ -26,6 +27,8 @@ public class VentOpen : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        timer = 7.5f;
     }
 
     // Update is called once per frame
@@ -45,5 +48,7 @@ public class VentOpen : MonoBehaviour
     public void CloseVent()
     {
         animator.Play("VentClosing");
+        timer = 7.5f;
+        open = false;
     }
 }

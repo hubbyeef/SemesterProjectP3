@@ -8,12 +8,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
+    public GameObject gameOverScreen;
+
     public Material nightSkybox;
     public Material daySkybox;
     public Material eveningSkybox;
 
     private GameObject[] windows;
     public GameObject vent;
+
+    public GameObject CrossHair;
 
     public bool paused;
 
@@ -50,6 +54,16 @@ public class GameManager : MonoBehaviour
         {
             ResumeGame();
         }
+
+        if (vent.GetComponent<VentOpen>().open == true)
+        {
+            vent.GetComponent<VentOpen>().timer -= Time.deltaTime;
+
+            if (vent.GetComponent<VentOpen>().timer <= 0)
+            {
+                StartCoroutine(GameOver());
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -83,9 +97,24 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("TitleScreen");
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        CrossHair.SetActive(false);
+        foreach (GameObject child in gameOverScreen.transform)
+        {
+            child.SetActive(false);
+        }
+        gameOverScreen.SetActive(true );
 
+        yield return new WaitForSeconds(2);
+
+        foreach (GameObject child in gameOverScreen.transform)
+        {
+            child.SetActive(true);
+        }
+
+        StopAllCoroutines();
     }
 
     public void LevelFinish()
