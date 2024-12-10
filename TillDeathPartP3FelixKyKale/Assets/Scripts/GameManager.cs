@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Material eveningSkybox;
 
     public List<GameObject> windows;
+    public GameObject vent;
 
     public bool paused;
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         {
             RenderSettings.skybox = nightSkybox;
             StartCoroutine(OpenRandomWindow());
+            StartCoroutine(OpenVent());
         }
     }
 
@@ -93,7 +95,17 @@ public class GameManager : MonoBehaviour
 
         while (night)
         {
-            RandomWindow(); yield return new WaitForSeconds(10 - level ^ 2);
+            RandomWindow(); yield return new WaitForSeconds(10);
+        }
+    }
+
+    public IEnumerator OpenVent()
+    {
+        yield return null;
+        while (night)
+        {
+            vent.GetComponent<VentOpen>().OpenVent();
+            yield return new WaitForSeconds(Random.Range(15, 30));
         }
     }
 }

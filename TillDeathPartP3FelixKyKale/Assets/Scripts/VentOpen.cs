@@ -12,6 +12,8 @@ public class VentOpen : MonoBehaviour
     public float maxOpenDistance = 5;
     public Transform hingePoint;
 
+    public bool open;
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -20,15 +22,41 @@ public class VentOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(player.transform.position, this.gameObject.transform.position);
-        if (distance < maxOpenDistance)
-        {
-            
-        }
+        
     }
 
-    void CloseVent()
+    public void OpenVent()
     {
-        transform.RotateAround(hingePoint.transform.position, 90);
+        transform.Rotate(new Vector3(90, 0, 0));
+    }
+
+    public void CloseVent()
+    {
+        transform.Rotate(new Vector3(-90, 0, 0));
+    }
+
+    void OnMouseOver()
+    {
+        {
+                float dist = Vector3.Distance(player.transform.position, transform.position);
+                if (dist < 5)
+                {
+
+                    {
+                        if (open == true )
+                        {
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                CloseVent();
+                            }
+                        }
+
+                    }
+
+                }
+            
+
+        }
+
     }
 }
