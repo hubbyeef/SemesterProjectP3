@@ -275,6 +275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LivingRoomLight1
       objectReference: {fileID: 0}
+    - target: {fileID: 808951036694823230, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.103
+      objectReference: {fileID: 0}
     - target: {fileID: 808951036730664948, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
