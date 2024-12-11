@@ -11,8 +11,13 @@ namespace SojaExiles
 		public Animator openandclosewindow;
 		public bool open;
 		public bool beingOpened;
-		public bool fullyOpen;
+		public float timer = 20f;
 		public Transform Player;
+		public Light[] lightsInRoom;
+		public LightSwitch lightSwitch;
+
+		public AnimationClip openingClip;
+		public AudioClip flickeringSFX;
 
 
         private void Awake()
@@ -32,13 +37,14 @@ namespace SojaExiles
 					{
 						
 						{
-							if (open == true || fullyOpen == true)
+							if (open == true || beingOpened == true)
 							{
 								if (Input.GetMouseButtonDown(0))
 								{
 									StopCoroutine(opening());
 									StartCoroutine(closing());
-								}
+
+                                }
 							}
 
 						}
@@ -53,9 +59,17 @@ namespace SojaExiles
 
      public IEnumerator opening()
 		{
+			timer = 20f;
 			print("you are opening the Window");
-			open = true;
+			StartCoroutine(lightFlickers());
 			openandclosewindow.Play("Openingwindow");
+            foreach (Light lights in lightsInRoom)
+            {
+				lights.GetComponent<AudioSource>().PlayOneShot(flickeringSFX);
+            }
+            yield return new WaitForSeconds(20f);
+			beingOpened = false;
+			open = true;
 			yield return new WaitForSeconds(.5f);
 		}
 
@@ -64,7 +78,29 @@ namespace SojaExiles
 			print("you are closing the Window");
 			openandclosewindow.Play("Closingwindow");
 			open = false;
-			yield return new WaitForSeconds(.5f);
+			beingOpened = false;
+			timer = 20f;
+            StopCoroutine(lightFlickers());
+            foreach (Light lights in lightsInRoom)
+            {
+                lights.GetComponent<AudioSource>().Stop();
+            }
+
+            yield return new WaitForSeconds(.5f);
+		}
+
+		public IEnumerator lightFlickers()
+		{
+			foreach (Light lights in lightsInRoom)
+			{
+				while (beingOpened && timer > 0f)
+				{
+					lights.intensity = Random.Range(0.1f, 0.49f);
+					yield return new WaitForSeconds(0.1f);
+					lights.intensity = Random.Range(0.5f, 2f);
+					yield return new WaitForSeconds(0.1f);
+				}
+			}
 		}
 
 

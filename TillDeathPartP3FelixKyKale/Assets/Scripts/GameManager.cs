@@ -1,6 +1,7 @@
 using SojaExiles;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,15 +20,22 @@ public class GameManager : MonoBehaviour
 
     public GameObject CrossHair;
 
+    private HideMonster hideMonster;
+    private PlayerController player;
+
     public bool paused;
 
     public bool night;
     public int level;
 
+    private int pickRandom;
+
 
     private void Awake()
     {
         windows = GameObject.FindGameObjectsWithTag("Window");
+        hideMonster = GetComponent<HideMonster>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Start is called before the first frame update
@@ -40,6 +48,7 @@ public class GameManager : MonoBehaviour
             RenderSettings.skybox = nightSkybox;
             StartCoroutine(OpenRandomWindow());
             StartCoroutine(OpenVent());
+            StartCoroutine(PeekabooMonster());
         }
     }
 
@@ -60,6 +69,32 @@ public class GameManager : MonoBehaviour
             vent.GetComponent<VentOpen>().timer -= Time.deltaTime;
 
             if (vent.GetComponent<VentOpen>().timer <= 0)
+            {
+                StartCoroutine(GameOver());
+            }
+        }
+
+        foreach (GameObject window in windows)
+        {
+            if (window.GetComponent<opencloseWindowApt>().open == true)
+            {
+                window.GetComponent<opencloseWindowApt>().timer -= Time.deltaTime;
+
+                if (window.GetComponent<opencloseWindowApt>().timer <= 0)
+                {
+                    StartCoroutine(GameOver());
+                }
+            }
+        }
+
+        if (hideMonster.active == true)
+        {
+            hideMonster.timer -= Time.deltaTime;
+            if (hideMonster.timer <= 0 && player.safe == true)
+            {
+                hideMonster.Survived();
+            }
+            else if (hideMonster.timer <= 0 && player.safe == false)
             {
                 StartCoroutine(GameOver());
             }
@@ -101,18 +136,9 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         CrossHair.SetActive(false);
-        foreach (GameObject child in gameOverScreen.transform)
-        {
-            child.SetActive(false);
-        }
         gameOverScreen.SetActive(true );
 
         yield return new WaitForSeconds(2);
-
-        foreach (GameObject child in gameOverScreen.transform)
-        {
-            child.SetActive(true);
-        }
 
         StopAllCoroutines();
     }
@@ -124,7 +150,7 @@ public class GameManager : MonoBehaviour
 
     public void RandomWindow()
     {
-        int pickRandom = Random.Range(0, windows.Length);
+        pickRandom = Random.Range(0, windows.Length);
         if (windows[pickRandom].GetComponent<opencloseWindowApt>().beingOpened == false)
         {
             windows[pickRandom].GetComponent<opencloseWindowApt>().beingOpened = true;
@@ -138,7 +164,7 @@ public class GameManager : MonoBehaviour
 
         while (night)
         {
-            RandomWindow(); yield return new WaitForSeconds(10);
+            RandomWindow(); yield return new WaitForSeconds(20);
         }
     }
 
@@ -150,6 +176,16 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(vent.GetComponent<VentOpen>().OpenVent());
             yield return new WaitForSeconds(Random.Range(30, 50));
+        }
+    }
+
+    public IEnumerator PeekabooMonster()
+    {
+        yield return new WaitForSeconds(5);
+        while (night)
+        {
+            StartCoroutine(hideMonster.itsComing());
+            yield return new WaitForSeconds(Random.Range(120, 300));
         }
     }
 }

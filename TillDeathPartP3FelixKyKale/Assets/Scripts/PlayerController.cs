@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public float staminaPercentUnit;
     public float percentUnit;
 
+    public bool safe;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,11 +63,12 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
         if (Input.GetKey(KeyCode.LeftShift) && stamina > 0)
         {
+            StopCoroutine(RechargeStamina());
             speed = 32; //sprint
             running = true;
 
             stamina -= staminaSpendRate * Time.deltaTime;
-            if (stamina <0) { stamina = 0; }
+            if (stamina <0) { stamina = 0; speed = 25; }
             UpdateStamina();
         }
         else if (stamina < maxStamina)
@@ -77,7 +80,7 @@ public class PlayerController : MonoBehaviour
             { stamina = maxStamina; StopCoroutine(RechargeStamina()); }
         }
 
-    
+        
         
         
     }
@@ -106,6 +109,22 @@ public class PlayerController : MonoBehaviour
             stamina += staminaRechargeRate / 400;
             UpdateStamina();
             yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("SafeSpot"))
+        {
+            safe = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("SafeSpot"))
+        {
+            safe = false;
         }
     }
 }

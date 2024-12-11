@@ -17,7 +17,7 @@ public class LightSwitch : MonoBehaviour
         player = GameObject.Find("Player");
 
         lightOn = true;
-        foreach (var item in lights)
+        foreach (GameObject item in lights)
         {
             item.GetComponent<Light>().intensity = 1f;
         }
@@ -36,11 +36,11 @@ public class LightSwitch : MonoBehaviour
         {
 
             {
-                if (lightOn != true)
+                if (lightOn == true)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        lightOn = true;
+                        lightOn = false;
                         Debug.Log("LightToggled");
                         foreach (var item in lights)
                         {
@@ -49,11 +49,11 @@ public class LightSwitch : MonoBehaviour
                     }
                 }
 
-                else
+                else if (lightOn != true)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
-                        lightOn = false;
+                        lightOn = true;
                         Debug.Log("LightToggled");
                         foreach (var item in lights)
                         {

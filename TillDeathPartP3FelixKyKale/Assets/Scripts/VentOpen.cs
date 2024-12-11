@@ -48,7 +48,7 @@ public class VentOpen : MonoBehaviour
     public void CloseVent()
     {
         animator.Play("VentClosing");
-        timer = 7.5f;
+        timer = 12.5f;
         open = false;
     }
 }
