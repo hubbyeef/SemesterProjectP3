@@ -83,19 +83,19 @@ public class GameManager : MonoBehaviour
 
         foreach (opencloseWindowApt window in windows)
         {
-            if (window.GetComponent<opencloseWindowApt>().open == true)
+            if (window.open == true && window.beingOpened == true)
             {
-                window.GetComponent<opencloseWindowApt>().timer -= Time.deltaTime;
+                window.timer -= Time.deltaTime;
 
-                if (window.GetComponent<opencloseWindowApt>().timer <= 0)
+                if (window.timer <= 0)
                 {
                     StartCoroutine(GameOver());
                 }
             }
 
-            else if (window.GetComponent<opencloseWindowApt>().open == false)
+            else if (window.open == false && window.beingOpened == false)
             {
-                window.GetComponent<opencloseWindowApt>().timer = 20f;
+                window.timer = 20f;
             }
         }
 

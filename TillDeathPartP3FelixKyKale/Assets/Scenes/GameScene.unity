@@ -486,6 +486,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 808951037151754052, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+      propertyPath: m_Name
+      value: ClosetDoor_Base(BedroomArea)
+      objectReference: {fileID: 0}
     - target: {fileID: 808951037151754058, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
       propertyPath: Player
       value: 
@@ -569,6 +573,10 @@ PrefabInstance:
     - target: {fileID: 808951037579951089, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
       propertyPath: m_Name
       value: LivingRoomLight2
+      objectReference: {fileID: 0}
+    - target: {fileID: 808951037621725855, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+      propertyPath: m_Name
+      value: ClosetDoor_Base(YourRoom)
       objectReference: {fileID: 0}
     - target: {fileID: 808951037632786708, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
       propertyPath: m_Name
@@ -750,6 +758,10 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 881236284}
+    - target: {fileID: 808951037914919510, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+      propertyPath: m_Name
+      value: ClosetDoor_Base(Kitchen)
+      objectReference: {fileID: 0}
     - target: {fileID: 808951037948940186, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
       propertyPath: m_Name
       value: LivingRoomLight3
@@ -3510,6 +3522,18 @@ PrefabInstance:
       propertyPath: closetDoor
       value: 
       objectReference: {fileID: 1824795056}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[0]
+      value: 
+      objectReference: {fileID: 1824795056}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[1]
+      value: 
+      objectReference: {fileID: 1679805183}
     - target: {fileID: 6159599270309162950, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.707
@@ -4796,7 +4820,7 @@ MonoBehaviour:
   ventOpening: {fileID: 8300000, guid: f809a0d53606dce4fac7a6681ce9d037, type: 3}
   ventClosing: {fileID: 0}
   openVent: {fileID: 0}
-  open: 0
+  opened: 0
   timer: 0
 --- !u!4 &975387186
 Transform:
@@ -5525,6 +5549,10 @@ PrefabInstance:
     - target: {fileID: 5986958801767457440, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
       propertyPath: m_Name
       value: Kid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986958801767457440, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6367566384277174298, guid: 87a7b985b15a4244091de35d7df9169a, type: 3}
       propertyPath: m_LocalScale.x
@@ -6517,6 +6545,18 @@ PrefabInstance:
       propertyPath: closetDoor
       value: 
       objectReference: {fileID: 1524510746}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[0]
+      value: 
+      objectReference: {fileID: 1524510746}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[1]
+      value: 
+      objectReference: {fileID: 2145610385}
     - target: {fileID: 6159599270309162950, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.082
@@ -7356,6 +7396,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571152633}
   m_Mesh: {fileID: 4300012, guid: 8537129dc3fbbe44186add4eea186b85, type: 3}
+--- !u!114 &1601643725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808951037151754058, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+  m_PrefabInstance: {fileID: 53547382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469e00e876fb40142af620db2b198643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1606423072
 GameObject:
   m_ObjectHideFlags: 0
@@ -7653,6 +7704,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1679805183 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808951037914919508, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+  m_PrefabInstance: {fileID: 53547382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469e00e876fb40142af620db2b198643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1695121836 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3550869669023164905, guid: f6cb79abd2916834eb8ae19f60dfb9ea, type: 3}
@@ -9348,6 +9410,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124871400}
   m_CullTransparentMesh: 1
+--- !u!114 &2145610385 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808951037621725853, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
+  m_PrefabInstance: {fileID: 53547382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469e00e876fb40142af620db2b198643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &844082570770866263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9364,6 +9437,18 @@ PrefabInstance:
       propertyPath: closetDoor
       value: 
       objectReference: {fileID: 580517674}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[0]
+      value: 
+      objectReference: {fileID: 580517674}
+    - target: {fileID: 4356430474199377296, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
+      propertyPath: closetDoors.Array.data[1]
+      value: 
+      objectReference: {fileID: 1601643725}
     - target: {fileID: 6159599270309162950, guid: 4f63d65704b35ee4cbff3f70b2bb1dbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.92

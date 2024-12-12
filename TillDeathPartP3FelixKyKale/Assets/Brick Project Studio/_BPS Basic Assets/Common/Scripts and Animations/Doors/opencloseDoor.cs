@@ -24,7 +24,7 @@ namespace SojaExiles
 				if (Player)
 				{
 					float dist = Vector3.Distance(Player.position, transform.position);
-					if (dist < 2)
+					if (dist < 5)
 					{
 						if (open == false)
 						{

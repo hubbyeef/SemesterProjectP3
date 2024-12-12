@@ -5,25 +5,27 @@ using UnityEngine;
 
 public class SafeSpot : MonoBehaviour
 {
-    public ClosetopencloseDoor closetDoor;
+    public ClosetopencloseDoor[] closetDoor;
     public bool closetOpen;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (closetDoor.open == true)
+        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other == playerController)
         {
-            closetOpen = true;
-        }
-        else if (closetDoor.open == false)
-        {
-            closetOpen = false;
+            playerController.safe = true;
         }
     }
 

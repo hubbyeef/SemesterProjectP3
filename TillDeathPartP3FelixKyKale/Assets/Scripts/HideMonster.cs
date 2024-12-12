@@ -29,7 +29,7 @@ public class HideMonster : MonoBehaviour
         {
             foreach (GameObject light in lightswitch.lights)
             {
-                light.GetComponent<Light>().intensity = 0.01f;
+                light.GetComponent<Light>().intensity = 0.03f;
             }
         }
 

@@ -104,17 +104,17 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        while (stamina < maxStamina)
+        if (stamina < maxStamina)
         {
-            stamina += staminaRechargeRate / 400;
+            stamina += staminaRechargeRate / 200;
             UpdateStamina();
             yield return new WaitForSeconds(0.1f);
         }
     }
 
-    private void OnTriggerStay(Collider other)
+   /* private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("SafeSpot"))
+        if (other.gameObject.GetComponent<SafeSpot>())
         {
             if (other.GetComponent<SafeSpot>().closetOpen == false)
             {
@@ -134,5 +134,5 @@ public class PlayerController : MonoBehaviour
         {
             safe = false;
         }
-    }
+    } */
 }
