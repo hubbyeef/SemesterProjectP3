@@ -27,7 +27,7 @@ public class VentMouseInput : MonoBehaviour
         {
 
             {
-                if (parentHinge.open == true)
+                if (parentHinge.opened == true)
                 {
                     if (Input.GetMouseButtonDown(0))
                     {

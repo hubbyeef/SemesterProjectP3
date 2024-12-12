@@ -11,14 +11,13 @@ public class VentOpen : MonoBehaviour
 
     private Animator animator;
     private AudioSource audioSource;
-    private GameManager gameManager;
 
     public AudioClip ventOpening;
     public AudioClip ventClosing;
 
     public AnimationClip openVent;
 
-    public bool open;
+    public bool opened;
     public float timer;
 
     void Start()
@@ -26,7 +25,6 @@ public class VentOpen : MonoBehaviour
         player = GameObject.Find("Player");
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         timer = 7.5f;
     }
@@ -42,13 +40,13 @@ public class VentOpen : MonoBehaviour
         audioSource.PlayOneShot(ventOpening);
         yield return new WaitForSeconds(ventOpening.length);
         animator.Play("VentOpening");
-        open = true;
+        opened = true;
     }
 
     public void CloseVent()
     {
         animator.Play("VentClosing");
         timer = 12.5f;
-        open = false;
+        opened = false;
     }
 }

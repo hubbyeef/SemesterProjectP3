@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public Material daySkybox;
     public Material eveningSkybox;
 
-    private GameObject[] windows;
+    private opencloseWindowApt[] windows;
     public GameObject vent;
 
     public GameObject CrossHair;
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        windows = GameObject.FindGameObjectsWithTag("Window");
+        windows = FindObjectsOfType<opencloseWindowApt>() ;
         hideMonster = GetComponent<HideMonster>();
         player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
@@ -81,17 +81,7 @@ public class GameManager : MonoBehaviour
             ResumeGame();
         }
 
-        if (vent.GetComponent<VentOpen>().open == true)
-        {
-            vent.GetComponent<VentOpen>().timer -= Time.deltaTime;
-
-            if (vent.GetComponent<VentOpen>().timer <= 0)
-            {
-                StartCoroutine(GameOver());
-            }
-        }
-
-        foreach (GameObject window in windows)
+        foreach (opencloseWindowApt window in windows)
         {
             if (window.GetComponent<opencloseWindowApt>().open == true)
             {
@@ -101,6 +91,21 @@ public class GameManager : MonoBehaviour
                 {
                     StartCoroutine(GameOver());
                 }
+            }
+
+            else if (window.GetComponent<opencloseWindowApt>().open == false)
+            {
+                window.GetComponent<opencloseWindowApt>().timer = 20f;
+            }
+        }
+
+        if (vent.GetComponent<VentOpen>().opened == true)
+        {
+            vent.GetComponent<VentOpen>().timer -= Time.deltaTime;
+
+            if (vent.GetComponent<VentOpen>().timer <= 0)
+            {
+                StartCoroutine(GameOver());
             }
         }
 

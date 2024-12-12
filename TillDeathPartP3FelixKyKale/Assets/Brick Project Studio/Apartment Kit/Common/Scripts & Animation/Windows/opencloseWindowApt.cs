@@ -73,7 +73,7 @@ namespace SojaExiles
 			yield return new WaitForSeconds(.5f);
 		}
 
-		IEnumerator closing()
+	public IEnumerator closing()
 		{
             timer = 20f;
             print("you are closing the Window");
