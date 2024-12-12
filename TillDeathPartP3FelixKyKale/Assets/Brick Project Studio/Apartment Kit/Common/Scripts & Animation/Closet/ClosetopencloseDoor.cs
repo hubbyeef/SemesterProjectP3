@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace SojaExiles
@@ -10,24 +11,29 @@ namespace SojaExiles
 
 		public Animator Closetopenandclose;
 		public bool open;
+		public bool inRange;
 		public Transform Player;
+		public Canvas hideCanvas;
+		public TextMeshProUGUI hideCanvasText;
 
 		void Start()
 		{
 			open = false;
 		}
 
-		void OnMouseOver()
+		void Update()
 		{
 			{
 				if (Player)
 				{
 					float dist = Vector3.Distance(Player.position, transform.position);
-					if (dist < 15)
+					if (dist < 3)
 					{
+						inRange = true;
+						hideCanvas.gameObject.SetActive(true);
 						if (open == false)
 						{
-							if (Input.GetMouseButtonDown(0))
+							if (Input.GetKeyDown(KeyCode.E))
 							{
 								StartCoroutine(opening());
 							}
@@ -36,7 +42,7 @@ namespace SojaExiles
 						{
 							if (open == true)
 							{
-								if (Input.GetMouseButtonDown(0))
+								if (Input.GetKeyDown(KeyCode.E))
 								{
 									StartCoroutine(closing());
 								}
@@ -44,6 +50,12 @@ namespace SojaExiles
 
 						}
 
+					}
+
+					else if (dist > 3)
+					{
+						inRange=false;
+						hideCanvas.gameObject.SetActive(false);
 					}
 				}
 
@@ -56,6 +68,7 @@ namespace SojaExiles
 			print("you are opening the door");
 			Closetopenandclose.Play("ClosetOpening");
 			open = true;
+			hideCanvasText.text = "Close";
 			yield return new WaitForSeconds(.5f);
 		}
 
@@ -64,7 +77,8 @@ namespace SojaExiles
 			print("you are closing the door");
 			Closetopenandclose.Play("ClosetClosing");
 			open = false;
-			yield return new WaitForSeconds(.5f);
+            hideCanvasText.text = "Open";
+            yield return new WaitForSeconds(.5f);
 		}
 
 

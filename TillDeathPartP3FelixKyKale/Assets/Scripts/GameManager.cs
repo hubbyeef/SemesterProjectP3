@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI closeWindowText;
     public GameObject gameOverScreen;
     public GameObject sceneTransition;
 
@@ -258,8 +259,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(initialWindowTimer);
         StartCoroutine(OpenRandomWindow());
+        closeWindowText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        closeWindowText.gameObject.SetActive(false);
         yield return new WaitForSeconds(initialVentTimer);
         StartCoroutine(OpenVent());
+        closeWindowText.text = "Close The vent in the Bathroom when you hear it.";
+        yield return new WaitForSeconds(2);
+        closeWindowText.gameObject.SetActive(false);
         yield return new WaitForSeconds(initialPeekabooTimer);
         StartCoroutine(PeekabooMonster());
     }

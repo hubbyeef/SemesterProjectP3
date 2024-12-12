@@ -1,11 +1,13 @@
 using SojaExiles;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class SafeSpot : MonoBehaviour
 {
-    public ClosetopencloseDoor[] closetDoor;
+    public ClosetopencloseDoor closetDoor;
+    public ClosetopencloseDoor closetBase;
     public bool closetOpen;
     private PlayerController playerController;
 
@@ -18,14 +20,14 @@ public class SafeSpot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other == playerController)
+        if (closetDoor.open == false && closetBase.open == false)
         {
-            playerController.safe = true;
+            closetOpen = false;
+        }
+
+        else if (closetDoor.open == true || closetBase.open == true)
+        {
+            closetOpen = true;
         }
     }
 

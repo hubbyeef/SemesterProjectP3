@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   /* private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.GetComponent<SafeSpot>())
         {
@@ -130,9 +130,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("SafeSpot"))
+        if (other.gameObject.GetComponent<SafeSpot>())
         {
             safe = false;
         }
-    } */
+    } 
 }
