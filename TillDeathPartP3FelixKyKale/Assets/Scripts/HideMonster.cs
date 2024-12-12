@@ -31,17 +31,16 @@ public class HideMonster : MonoBehaviour
             {
                 light.GetComponent<Light>().intensity = 0.05f;
             }
-
-            
-            yield return new WaitForSeconds(0.5f);
-            hideText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
-            itsComingText.gameObject.SetActive(true);
-            yield return new WaitForSeconds(1.25f);
-            hideText.gameObject.SetActive(false);
-            timer = 10f;
-            active = true;
         }
+
+        yield return new WaitForSeconds(0.5f);
+        hideText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        itsComingText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.25f);
+        hideText.gameObject.SetActive(false);
+        timer = 10f;
+        active = true;
     }
 
     public void Survived()
@@ -53,5 +52,7 @@ public class HideMonster : MonoBehaviour
                 light.GetComponent<Light>().intensity = lightswitch.regularIntensity;
             }
         }
+
+        timer = 10f;
     }
 }

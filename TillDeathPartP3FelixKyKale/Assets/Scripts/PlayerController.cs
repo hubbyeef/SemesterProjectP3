@@ -116,7 +116,15 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("SafeSpot"))
         {
-            safe = true;
+            if (other.GetComponent<SafeSpot>().closetOpen == false)
+            {
+                safe = true;
+            }
+
+            else if (other.GetComponent<SafeSpot>().closetOpen == true)
+            {
+                safe = false;
+            }
         }
     }
 

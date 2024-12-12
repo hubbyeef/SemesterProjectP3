@@ -6,6 +6,7 @@ using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum haunts { none, windowMonster, ventMonster, peekabooDemon}
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
@@ -24,11 +25,18 @@ public class GameManager : MonoBehaviour
     private PlayerController player;
 
     public bool paused;
+    public bool currentlyHaunted;
+
+    public haunts hauntTactic;
 
     public bool night;
     public int level;
 
     private int pickRandom;
+
+    public float initialWindowTimer;
+    public float initialVentTimer;
+    public float initialPeekabooTimer;
 
 
     private void Awake()
@@ -41,25 +49,26 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        hauntTactic = haunts.none;
 
         if (night)
         {
             RenderSettings.skybox = nightSkybox;
-            StartCoroutine(OpenRandomWindow());
-            StartCoroutine(OpenVent());
-            StartCoroutine(PeekabooMonster());
+            StartCoroutine(InitialHauntingTimer());
+            StartCoroutine(CurrentHaunting());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !paused)
+        
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !paused) //Pause the Game
         {
             PauseGame();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && paused)
+        else if (Input.GetKeyDown(KeyCode.Escape) && paused) //Unpause the Game
         {
             ResumeGame();
         }
@@ -103,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
     }
 
     public void StartGame()
@@ -136,7 +145,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         CrossHair.SetActive(false);
-        gameOverScreen.SetActive(true );
+        gameOverScreen.SetActive(true);
 
         yield return new WaitForSeconds(2);
 
@@ -145,7 +154,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelFinish()
     {
-    
+
     }
 
     public void RandomWindow()
@@ -160,32 +169,71 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator OpenRandomWindow()
     {
-        yield return new WaitForSeconds(10);
 
         while (night)
         {
-            RandomWindow(); yield return new WaitForSeconds(20);
+            RandomWindow();
+            currentlyHaunted = true;
+            hauntTactic = haunts.windowMonster;
+            yield return new WaitForSeconds(20);
         }
     }
 
     public IEnumerator OpenVent()
     {
-        yield return new WaitForSeconds(5);
-
         while (night)
         {
             StartCoroutine(vent.GetComponent<VentOpen>().OpenVent());
+            currentlyHaunted = true;
+            hauntTactic = haunts.ventMonster;
             yield return new WaitForSeconds(Random.Range(30, 50));
         }
     }
 
     public IEnumerator PeekabooMonster()
     {
-        yield return new WaitForSeconds(5);
         while (night)
         {
             StartCoroutine(hideMonster.itsComing());
+            currentlyHaunted = true;
+            hauntTactic = haunts.peekabooDemon;
             yield return new WaitForSeconds(Random.Range(120, 300));
         }
+    }
+
+    public IEnumerator CurrentHaunting()
+    {
+        if (hauntTactic == haunts.windowMonster)
+        {
+            StopCoroutine(PeekabooMonster());
+            yield return new WaitForSeconds(Random.Range(50, 130));
+            StartCoroutine(PeekabooMonster());
+        }
+
+        if (hauntTactic == haunts.ventMonster)
+        {
+            StopCoroutine(PeekabooMonster());
+            yield return new WaitForSeconds(Random.Range(20, 120));
+            StartCoroutine(PeekabooMonster());
+        }
+
+        if (hauntTactic == haunts.peekabooDemon)
+        {
+            StopCoroutine(OpenVent());
+            StopCoroutine(OpenRandomWindow());
+            yield return new WaitForSeconds(Random.Range(20, 25));
+            StartCoroutine(OpenVent());
+            StartCoroutine(OpenRandomWindow());
+        }
+    }
+
+    public IEnumerator InitialHauntingTimer()
+    {
+        yield return new WaitForSeconds(initialWindowTimer);
+        StartCoroutine(OpenRandomWindow());
+        yield return new WaitForSeconds(initialVentTimer);
+        StartCoroutine(OpenVent());
+        yield return new WaitForSeconds(initialPeekabooTimer);
+        StartCoroutine(PeekabooMonster());
     }
 }

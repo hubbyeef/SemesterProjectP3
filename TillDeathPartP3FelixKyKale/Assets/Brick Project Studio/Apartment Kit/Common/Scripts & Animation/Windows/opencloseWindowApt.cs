@@ -75,16 +75,17 @@ namespace SojaExiles
 
 		IEnumerator closing()
 		{
-			print("you are closing the Window");
+            timer = 20f;
+            print("you are closing the Window");
 			openandclosewindow.Play("Closingwindow");
 			open = false;
 			beingOpened = false;
-			timer = 20f;
             StopCoroutine(lightFlickers());
             foreach (Light lights in lightsInRoom)
             {
                 lights.GetComponent<AudioSource>().Stop();
             }
+            timer = 20f;
 
             yield return new WaitForSeconds(.5f);
 		}
