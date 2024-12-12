@@ -2,15 +2,19 @@ using SojaExiles;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum haunts { none, windowMonster, ventMonster, peekabooDemon}
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
+    public TextMeshProUGUI timeText;
     public GameObject gameOverScreen;
+    public GameObject sceneTransition;
 
     public Material nightSkybox;
     public Material daySkybox;
@@ -31,6 +35,9 @@ public class GameManager : MonoBehaviour
 
     public bool night;
     public int level;
+    public float currentTime;
+    public int currentHour;
+    public bool firstHour;
 
     private int pickRandom;
 
@@ -50,6 +57,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         hauntTactic = haunts.none;
+        firstHour = true;
 
         if (night)
         {
@@ -62,7 +70,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        TimeOfDay();
 
         if (Input.GetKeyDown(KeyCode.Escape) && !paused) //Pause the Game
         {
@@ -108,6 +116,12 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(GameOver());
             }
         }
+
+        if (currentHour >= 6 && currentHour != 12)
+        {
+            StopAllCoroutines();
+            LevelFinish();
+        }
     }
 
     private void FixedUpdate()
@@ -117,6 +131,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        StartCoroutine(SceneTransitionStartGame());
+    }
+    public IEnumerator SceneTransitionStartGame()
+    {
+        sceneTransition.gameObject.SetActive(true);
+        sceneTransition.GetComponent<Animator>().Play("FadingIn");
+        yield return new WaitForSeconds(1.3f);
         SceneManager.LoadScene("GameScene");
     }
 
@@ -138,7 +159,7 @@ public class GameManager : MonoBehaviour
     public void MainMenuButton()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("TitleScreen");
+        StartCoroutine(SceneTransitioningMainMenu());
     }
 
     public IEnumerator GameOver()
@@ -146,6 +167,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         CrossHair.SetActive(false);
         gameOverScreen.SetActive(true);
+        gameOverScreen.GetComponent<Animator>().Play("FadingIn");
 
         yield return new WaitForSeconds(2);
 
@@ -154,7 +176,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelFinish()
     {
-
+        MainMenuButton();
     }
 
     public void RandomWindow()
@@ -175,7 +197,7 @@ public class GameManager : MonoBehaviour
             RandomWindow();
             currentlyHaunted = true;
             hauntTactic = haunts.windowMonster;
-            yield return new WaitForSeconds(20);
+            yield return new WaitForSeconds(Random.Range(25, 40));
         }
     }
 
@@ -235,5 +257,31 @@ public class GameManager : MonoBehaviour
         StartCoroutine(OpenVent());
         yield return new WaitForSeconds(initialPeekabooTimer);
         StartCoroutine(PeekabooMonster());
+    }
+
+    public IEnumerator SceneTransitioningMainMenu()
+    {
+        sceneTransition.gameObject.SetActive(true);
+        sceneTransition.GetComponent<Animator>().Play("FadingIn");
+        yield return new WaitForSeconds(1.3f);
+        SceneManager.LoadScene("TitleScreen");
+    }
+
+    public void TimeOfDay()
+    {
+        currentTime += Time.deltaTime;
+        UpdateTimeText();
+        void UpdateTimeText()
+        {
+            if (Mathf.FloorToInt(currentTime / 45) + 12 == 12)
+            {
+                currentHour = 12;
+            }
+            else if (Mathf.FloorToInt(currentTime/45) + 12 > 12)
+            {
+                currentHour = Mathf.FloorToInt(currentTime / 45);
+            }
+            timeText.text = (currentHour + "AM");
+        }
     }
 }
