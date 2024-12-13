@@ -9,6 +9,7 @@ namespace SojaExiles
 	{
 
 		public Animator openandclosewindow;
+		public AudioSource audioSource;
 		public bool open;
 		public bool beingOpened;
 		public float timer = 20f;
@@ -18,6 +19,8 @@ namespace SojaExiles
 
 		public AnimationClip openingClip;
 		public AudioClip flickeringSFX;
+		public AudioClip closingClip;
+
 
 
         private void Awake()
@@ -85,6 +88,8 @@ namespace SojaExiles
             {
                 lights.GetComponent<AudioSource>().Stop();
             }
+
+            audioSource.PlayOneShot(closingClip);
             timer = 20f;
 
             yield return new WaitForSeconds(.5f);

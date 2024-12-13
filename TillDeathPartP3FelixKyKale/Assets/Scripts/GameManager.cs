@@ -8,14 +8,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum haunts { none, windowMonster, ventMonster, peekabooDemon}
+public enum haunts { none, windowMonster, ventMonster, peekabooDemon }
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseScreen;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI closeWindowText;
+    public GameObject hideTextUI;
+    public TextMeshProUGUI controlsText;
     public GameObject gameOverScreen;
     public GameObject sceneTransition;
+    public AudioClip morningAlarm;
+    private AudioSource audioSource;
+    public Image star;
 
     public Material nightSkybox;
     public Material daySkybox;
@@ -23,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private opencloseWindowApt[] windows;
     public GameObject vent;
+    public List<ClosetopencloseDoor> closets;
 
     public GameObject CrossHair;
 
@@ -46,12 +52,15 @@ public class GameManager : MonoBehaviour
     public float initialVentTimer;
     public float initialPeekabooTimer;
 
+    public static bool won;
+
 
     private void Awake()
     {
-        windows = FindObjectsOfType<opencloseWindowApt>() ;
+        windows = FindObjectsOfType<opencloseWindowApt>();
         hideMonster = GetComponent<HideMonster>();
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+        audioSource = Camera.main.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -59,12 +68,26 @@ public class GameManager : MonoBehaviour
     {
         hauntTactic = haunts.none;
         firstHour = true;
+        StartCoroutine(showControls());
 
         if (night)
         {
             RenderSettings.skybox = nightSkybox;
             StartCoroutine(InitialHauntingTimer());
             StartCoroutine(CurrentHaunting());
+        }
+
+        if (won)
+        {
+            if (star != null)
+            {
+                star.gameObject.SetActive(true);
+            }
+
+            if (star == null)
+            {
+                return;
+            }
         }
     }
 
@@ -123,10 +146,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (currentHour >= 6 && currentHour != 12)
+        CheckForHide();
+
+
+
+        if (currentHour >= 6 && currentHour != 12 && won == false)
         {
             StopAllCoroutines();
-            LevelFinish();
+
+            StartCoroutine(LevelFinish());
         }
     }
 
@@ -180,8 +208,11 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void LevelFinish()
+    public IEnumerator LevelFinish()
     {
+        won = true;
+        audioSource.PlayOneShot(morningAlarm);
+        yield return new WaitForSeconds(morningAlarm.length);
         MainMenuButton();
     }
 
@@ -260,12 +291,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(initialWindowTimer);
         StartCoroutine(OpenRandomWindow());
         closeWindowText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
         closeWindowText.gameObject.SetActive(false);
         yield return new WaitForSeconds(initialVentTimer);
         StartCoroutine(OpenVent());
-        closeWindowText.text = "Close The vent in the Bathroom when you hear it.";
-        yield return new WaitForSeconds(2);
+        closeWindowText.text = "Close the vent in the bathroom when you hear it.";
+        closeWindowText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4);
         closeWindowText.gameObject.SetActive(false);
         yield return new WaitForSeconds(initialPeekabooTimer);
         StartCoroutine(PeekabooMonster());
@@ -289,11 +321,37 @@ public class GameManager : MonoBehaviour
             {
                 currentHour = 12;
             }
-            else if (Mathf.FloorToInt(currentTime/45) + 12 > 12)
+            else if (Mathf.FloorToInt(currentTime / 45) + 12 > 12)
             {
                 currentHour = Mathf.FloorToInt(currentTime / 45);
             }
             timeText.text = (currentHour + "AM");
         }
+    }
+
+    public void CheckForHide()
+    {
+        foreach (ClosetopencloseDoor closet in closets)
+        {
+            float distance = Vector3.Distance(closet.transform.position, player.transform.position);
+            if (distance < 2f)
+            {
+                hideTextUI.gameObject.SetActive(true);
+            }
+            else if (distance > 2f)
+            {
+                hideTextUI.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public IEnumerator showControls()
+    {
+        controlsText.gameObject.SetActive(true);
+        controlsText.rectTransform.anchoredPosition = new Vector3(0, 0);
+        controlsText.rectTransform.localScale = new Vector3(2, 2);
+        yield return new WaitForSeconds(10);
+        controlsText.rectTransform.anchoredPosition = new Vector3(830, -430);
+        controlsText.rectTransform.localScale = new Vector3(1, 1);
     }
 }

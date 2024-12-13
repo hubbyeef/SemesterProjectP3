@@ -12,6 +12,7 @@ public class VentOpen : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
 
+    public AudioClip ventRattling;
     public AudioClip ventOpening;
     public AudioClip ventClosing;
 
@@ -37,9 +38,10 @@ public class VentOpen : MonoBehaviour
 
     public IEnumerator OpenVent()
     {
-        audioSource.PlayOneShot(ventOpening);
-        yield return new WaitForSeconds(ventOpening.length);
+        audioSource.PlayOneShot(ventRattling);
+        yield return new WaitForSeconds(ventRattling.length);
         animator.Play("VentOpening");
+        audioSource.PlayOneShot(ventOpening);
         opened = true;
     }
 

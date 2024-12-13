@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -116,15 +115,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<SafeSpot>())
         {
-            if (other.GetComponent<SafeSpot>().closetOpen == false)
-            {
-                safe = true;
-            }
-
-            else if (other.GetComponent<SafeSpot>().closetOpen == true)
-            {
-                safe = false;
-            }
+            safe = true;
         }
     }
 
