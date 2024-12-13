@@ -13,6 +13,7 @@ public class HideMonster : MonoBehaviour
     public GameObject itsComingText;
     public GameManager gameManager;
     public AudioClip lightsOut;
+    public AudioClip footsteps;
     public AudioClip lightsBack;
 
     // Start is called before the first frame update
@@ -52,6 +53,12 @@ public class HideMonster : MonoBehaviour
         hideText.gameObject.SetActive(false);
         timer = 10f;
         active = true;
+
+        yield return new WaitForSeconds(3);
+        foreach (LightSwitch lightswitch in lightSwitch)
+        {
+            lightswitch.GetComponent<AudioSource>().PlayOneShot(footsteps);
+        }
     }
 
     public void Survived()

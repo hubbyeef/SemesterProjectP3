@@ -2385,6 +2385,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 946160578}
   sceneTransition: {fileID: 8133756294727768925}
   morningAlarm: {fileID: 8300000, guid: 1c6bf44c6fb57934b8a0e0b1732a15f6, type: 3}
+  star: {fileID: 0}
   nightSkybox: {fileID: 2100000, guid: eee9f4989e3dfe745a11159c07ab0618, type: 2}
   daySkybox: {fileID: 2100000, guid: 9aa8ed67591432941bb76f12eb23ff91, type: 2}
   eveningSkybox: {fileID: 0}
@@ -2433,6 +2434,7 @@ MonoBehaviour:
   itsComingText: {fileID: 1453957238}
   gameManager: {fileID: 0}
   lightsOut: {fileID: 8300000, guid: 7760793e246f4164a88dffb69cdc8121, type: 3}
+  footsteps: {fileID: 8300000, guid: b6d0328132a789e468af7e5fbf29f9f5, type: 3}
   lightsBack: {fileID: 8300000, guid: f66570c3ec77ea24697c2ed04df744f4, type: 3}
 --- !u!1 &355140400
 GameObject:
