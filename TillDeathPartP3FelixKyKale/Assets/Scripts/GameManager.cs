@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public AudioClip morningAlarm;
     private AudioSource audioSource;
     public Image star;
+    public Image jumpscareImage;
+    public Image blackScreen;
+    public AudioClip breathe;
+    public TextMeshProUGUI youreCooked;
 
     public Material nightSkybox;
     public Material daySkybox;
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
     public List<ClosetopencloseDoor> closets;
 
     public GameObject CrossHair;
+    public GameObject monster;
 
     private HideMonster hideMonster;
     private PlayerController player;
@@ -113,7 +118,12 @@ public class GameManager : MonoBehaviour
 
                 if (window.timer <= 0)
                 {
-                    StartCoroutine(GameOver());
+                    for (int i = 0; i < 1; i++)
+                    {
+                        StopAllCoroutines();
+                        StartCoroutine(itsOver());
+                        enabled = false;
+                    }
                 }
             }
 
@@ -129,7 +139,12 @@ public class GameManager : MonoBehaviour
 
             if (vent.GetComponent<VentOpen>().timer <= 0)
             {
-                StartCoroutine(GameOver());
+                for (int i = 0; i < 1; i++)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(itsOver());
+                    enabled = false;
+                }
             }
         }
 
@@ -142,7 +157,12 @@ public class GameManager : MonoBehaviour
             }
             else if (hideMonster.timer <= 0 && player.safe == false)
             {
-                StartCoroutine(GameOver());
+                for (int i = 0; i < 1; i++)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(itsOver());
+                    enabled = false;
+                }
             }
         }
 
@@ -198,10 +218,19 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameOver()
     {
+        jumpscareImage.gameObject.SetActive(true);
+        audioSource.PlayOneShot(breathe);
+        blackScreen.gameObject.SetActive(true);
+        yield return new WaitForSeconds(breathe.length);
+        jumpscareImage.GetComponent<Animator>().Play("FadingOut");
+        yield return new WaitForSeconds(1.1f);
+        jumpscareImage.gameObject.SetActive(false);
+        Destroy(jumpscareImage);
         Cursor.lockState = CursorLockMode.Confined;
         CrossHair.SetActive(false);
         gameOverScreen.SetActive(true);
         gameOverScreen.GetComponent<Animator>().Play("FadingIn");
+        gameOverScreen.GetComponentInChildren<Animator>().Play("FadingIn");
 
         yield return new WaitForSeconds(2);
 
@@ -353,5 +382,37 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10);
         controlsText.rectTransform.anchoredPosition = new Vector3(830, -430);
         controlsText.rectTransform.localScale = new Vector3(1, 1);
+    }
+
+    public IEnumerator itsOver()
+    {
+        yield return new WaitForSeconds(1);
+
+        foreach (LightSwitch lightswitch in hideMonster.lightSwitch)
+        {
+            foreach (GameObject light in lightswitch.lights)
+            {
+                light.GetComponent<Light>().intensity = 0.1f;
+                light.GetComponent<AudioSource>().PlayOneShot(hideMonster.lightsOut);
+            }
+        }
+
+        yield return new WaitForSeconds(4.5f);
+
+        youreCooked.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        youreCooked.gameObject.SetActive(false);
+        Vector3 spawnPosition = new Vector3(Random.Range(-30, -20), 0, Random.Range(-30, 30));
+        Instantiate(monster, spawnPosition, Quaternion.identity);
+
+        StopCoroutine(itsOver());
+
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

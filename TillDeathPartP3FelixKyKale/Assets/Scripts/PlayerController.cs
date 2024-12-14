@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
 
     public Animator animator;
+    public GameManager gameManager;
     private Rigidbody rb;
     private Camera mainCam;
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mainCam = Camera.main;
 
         stamina = maxStamina;
@@ -111,6 +113,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ghost"))
+        {
+            Destroy(other);
+            StartCoroutine(gameManager.GameOver());
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.GetComponent<SafeSpot>())
