@@ -213,6 +213,7 @@ public class GameManager : MonoBehaviour
     public void MainMenuButton()
     {
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Confined;
         StartCoroutine(SceneTransitioningMainMenu());
     }
 
