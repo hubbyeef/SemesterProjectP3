@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
         if (stamina < maxStamina)
         {
-            stamina += staminaRechargeRate / 200;
+            stamina += staminaRechargeRate / 150;
             UpdateStamina();
             yield return new WaitForSeconds(0.1f);
         }

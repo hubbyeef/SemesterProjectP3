@@ -8,6 +8,7 @@ TagManager:
   - GameManager
   - SafeSpot
   - Ghost
+  - Interactible
   layers:
   - Default
   - TransparentFX

@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject vent;
     public List<ClosetopencloseDoor> closets;
 
-    public GameObject CrossHair;
+    public Image CrossHair;
     public GameObject monster;
 
     private HideMonster hideMonster;
@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
         jumpscareImage.gameObject.SetActive(false);
         Destroy(jumpscareImage);
         Cursor.lockState = CursorLockMode.Confined;
-        CrossHair.SetActive(false);
+        CrossHair.gameObject.SetActive(false);
         gameOverScreen.SetActive(true);
         gameOverScreen.GetComponent<Animator>().Play("FadingIn");
         gameOverScreen.GetComponentInChildren<Animator>().Play("FadingIn");

@@ -543,11 +543,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 808951037656818317, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
   m_PrefabInstance: {fileID: 53547382}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &82477087 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 808951036897961146, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
-  m_PrefabInstance: {fileID: 53547382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &104489673
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,18 +963,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 1057476281}
+  timeText: {fileID: 0}
+  closeWindowText: {fileID: 0}
+  hideTextUI: {fileID: 0}
+  controlsText: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  sceneTransition: {fileID: 0}
+  morningAlarm: {fileID: 0}
+  star: {fileID: 0}
+  jumpscareImage: {fileID: 0}
+  blackScreen: {fileID: 0}
+  breathe: {fileID: 0}
+  youreCooked: {fileID: 0}
   nightSkybox: {fileID: 2100000, guid: eee9f4989e3dfe745a11159c07ab0618, type: 2}
   daySkybox: {fileID: 2100000, guid: 9aa8ed67591432941bb76f12eb23ff91, type: 2}
   eveningSkybox: {fileID: 0}
-  windows:
-  - {fileID: 1062867346}
-  - {fileID: 1650186474}
-  - {fileID: 1433874202}
-  - {fileID: 1888866690}
-  - {fileID: 82477087}
+  vent: {fileID: 0}
+  closets: []
+  CrossHair: {fileID: 0}
+  monster: {fileID: 0}
   paused: 0
+  currentlyHaunted: 0
+  hauntTactic: 0
   night: 1
   level: 3
+  currentTime: 0
+  currentHour: 0
+  firstHour: 0
+  initialWindowTimer: 0
+  initialVentTimer: 0
+  initialPeekabooTimer: 0
 --- !u!1 &356595912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,11 +2080,13 @@ MonoBehaviour:
   running: 0
   staminaBar: {fileID: 513164464}
   animator: {fileID: 953480471}
+  gameManager: {fileID: 0}
   horizontal: 0
   vertical: 0
   orientation: {fileID: 819019526}
   staminaPercentUnit: 0
   percentUnit: 0
+  safe: 0
 --- !u!54 &881236286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2788,11 +2803,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057476281}
   m_CullTransparentMesh: 1
---- !u!1 &1062867346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 808951037733539538, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
-  m_PrefabInstance: {fileID: 53547382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1103170621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3123,11 +3133,6 @@ Transform:
   - {fileID: 1468913975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1433874202 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 808951037436814441, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
-  m_PrefabInstance: {fileID: 53547382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1433976798 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 808951037313769752, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
@@ -3419,11 +3424,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &1650186474 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 808951038347542630, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
-  m_PrefabInstance: {fileID: 53547382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1701639192
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,11 +3740,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1888866690 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 808951037632786708, guid: 49f576a03ece56a4e9c640ed081f6a68, type: 3}
-  m_PrefabInstance: {fileID: 53547382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1921494767
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SojaExiles
@@ -15,24 +16,28 @@ namespace SojaExiles
         public GameObject Player;
         public GameObject hideTextUI;
         public TextMeshProUGUI hideCanvasText;
+        private GameManager gameManager;
 
         void Start()
         {
             Player = GameObject.Find("Player");
             open = false;
+
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
-        void Update()
+        void OnMouseOver()
         {
             if (Player)
             {
                 float dist = Vector3.Distance(Player.transform.position, this.transform.position);
                 if (dist < 2)
                 {
+                    gameManager.CrossHair.color = Color.red;
                     inRange = true;
                     if (open == false)
                     {
-                        if (Input.GetKeyDown(KeyCode.E))
+                        if (Input.GetMouseButtonDown(0))
                         {
                             StartCoroutine(opening());
                         }
@@ -41,7 +46,7 @@ namespace SojaExiles
                     {
                         if (open == true)
                         {
-                            if (Input.GetKeyDown(KeyCode.E))
+                            if (Input.GetMouseButtonDown(0))
                             {
                                 StartCoroutine(closing());
                             }
@@ -58,17 +63,13 @@ namespace SojaExiles
 
             
             }
-            if (inRange == true)
-            {
-
-                hideTextUI.gameObject.SetActive(true);
-            }
-            else if (inRange == false)
-            {
-                hideTextUI.gameObject.SetActive(false);
-            }
 
 
+        }
+
+        private void OnMouseExit()
+        {
+            gameManager.CrossHair.color = Color.white;
         }
 
         IEnumerator opening()

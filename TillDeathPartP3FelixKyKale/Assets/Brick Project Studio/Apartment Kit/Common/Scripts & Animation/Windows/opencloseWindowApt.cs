@@ -20,6 +20,7 @@ namespace SojaExiles
 		public AnimationClip openingClip;
 		public AudioClip flickeringSFX;
 		public AudioClip closingClip;
+		public GameManager gameManager;
 
 
 
@@ -28,6 +29,7 @@ namespace SojaExiles
 			beingOpened = false;
             open = false;
             Player = GameObject.Find("Player").transform;
+			gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
 		void OnMouseOver()
@@ -38,8 +40,8 @@ namespace SojaExiles
 					float dist = Vector3.Distance(Player.position, transform.position);
 					if (dist < 5)
 					{
-						
-						{
+                        gameManager.CrossHair.color = Color.red;
+                        {
 							if (open == true || beingOpened == true)
 							{
 								if (Input.GetMouseButtonDown(0))
@@ -59,8 +61,12 @@ namespace SojaExiles
 
 		}
 
+        private void OnMouseExit()
+        {
+            gameManager.CrossHair.color = Color.white;
+        }
 
-     public IEnumerator opening()
+        public IEnumerator opening()
 		{
 			timer = 20f;
 			print("you are opening the Window");

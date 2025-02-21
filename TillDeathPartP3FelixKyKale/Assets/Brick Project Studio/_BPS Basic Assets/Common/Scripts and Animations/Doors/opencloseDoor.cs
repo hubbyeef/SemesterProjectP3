@@ -11,19 +11,22 @@ namespace SojaExiles
 		public Animator openandclose;
 		public bool open;
 		public Transform Player;
+		private GameManager manager;
 
 		void Start()
 		{
 			open = false;
 			Player = GameObject.Find("Player").transform;
-		}
+			manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
 
 		void OnMouseOver()
 		{
 			{
 				if (Player)
 				{
-					float dist = Vector3.Distance(Player.position, transform.position);
+                    manager.CrossHair.color = Color.red;
+                    float dist = Vector3.Distance(Player.position, transform.position);
 					if (dist < 5)
 					{
 						if (open == false)
@@ -52,7 +55,12 @@ namespace SojaExiles
 
 		}
 
-		IEnumerator opening()
+        private void OnMouseExit()
+        {
+            manager.CrossHair.color = Color.white;
+        }
+
+        IEnumerator opening()
 		{
 			print("you are opening the door");
 			openandclose.Play("Opening");
